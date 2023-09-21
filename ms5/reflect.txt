@@ -1,0 +1,76 @@
+/* Citation and Sources...
+Final Project Milestone 5
+Module: Reflect
+Filename: Reflect.txt
+Version 1.0
+Author	Harikrishna Paresh Patel
+Revision History
+-----------------------------------------------------------
+Date      Reason
+2020/?/?  Preliminary release
+2020/?/?  Debugged DMA
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my project milestones.
+-----------------------------------------------------------
+*/
+
+In milestone 1 we had to create a menu system which gets data into menuitem which will be displayed 
+in the menu and after each level of user selection the menu will indent and it keeps track of the no
+of items that it recieved and uses it for validating user selection based on range of items
+
+In milestone 2 we took the menu system further ahead by creating a parking application by creating a
+vehicle menu which consisted of car and motorcycle as we added them in menu as menus new items
+and implimented a run function which would display whats hapening and we had to get user selection
+if they want to close the parking and if they want to remove vehicle I had created a util 
+function to keep prompting for valid user selection only as this reduced repeatation of same code
+
+In milestone3 we had created an abstract class Readwritable which is used to create a vehicle it checks
+if the file is comma separted or not which will be used to read data and write data into according to the
+flag of csv and we created a derived class of vehicle out of readwritable class and and giving vehicle all 
+its properties such as its license plate and its make and model and its parking spot and displaying vehicle
+on how the file is if its comma seperated it will read and display comma separated vehicle i had overwritten the 
+toupper function provided by professor so it could be able to take in the dynamic and make it the license plate capital
+and foremost i preffered to use Fardad's utils as it supported many features that saved time creating one
+
+toUpper 
+void Utils::toUpper(char* ch) {
+    while (*ch) {
+       *ch = toupper(*ch);
+        ch++;
+    }
+}
+
+bool Utils::yes(istream& is) {
+      char selection;
+      char newline;
+      do {
+         selection = is.get();
+         newline = is.get();
+         if (newline != '\n') {
+            is.ignore(1000, '\n');
+            selection = 'x';
+         }
+      } while (selection != 'y' && selection != 'Y' && selection != 'n' && selection != 'N'
+         && cout << "Invalid response, only (Y)es or (N)o are acceptable, retry: ");
+      return selection == 'y' || selection == 'Y';
+}
+
+in milestone4 we have created polymorphic objects a car and motorcycle which inherited the properties of vehicle
+and we added their properties lab 9 had helped me successfully complete creation of Car to be able to copy properties
+by calling the base class constructor in this workshop i faced an issue of memory leak and after going through the valgrind
+summary and did proper deletion before assigning car with vehicle properties and the same logic for motorcycle creation and i
+utilized my yes function to validate car and motorcycle features
+
+in milestone5 this was the trickiest part of whole milestones as we had to bring together all modules together
+and from an application bringing the parts together was alright but having to debug back and forth such a big module
+was difficult part as we had to modify other modules to support valet parking functionality i had to chnage the whole parking 
+system such that the parkingspot could hold only max number of cars and the number of vehicles in parking cannot exceed its limit
+it was hard to keep a track of the set csvflag and i had set them inccorect values and no data was able to load up on the screen and
+i had collaborated with the class why no data was showing up and if anyone faced the same issue and i was told to check my csvflag i debuged
+and corrected my data but this wasn't the end after all succesfull output test i tried to run the application on matrix
+and got few more memory leaks and one error was really terrible it hadn't allowed me do anything and it was like this is caused by unitialized values 
+so i had to initialize variables to null but the momory leak was so ridiculous the heap had stored about 400 milion bytes and got stuck making sure all memory 
+of parkingspots was deleted and emptied before any allocation was made in findparking loaddata and in returning parking i ensured to delete once the
+vehicle was found the journey to build this application was some how terrible but the review guidance i got helped me understand the system more clearly and helped
+me impliment the solution in a better way from what i have learnt from this application would allow me make a personal project in more systematic way 
